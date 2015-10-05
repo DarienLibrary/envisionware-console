@@ -10,11 +10,11 @@ class ReportsController extends Controller
 {
     public function index()
     {
-        return view('pages/report');
+        return view('pages/reports/reports');
     }
 
-    public function report($rtype)
+    public function wdTxReport()
     {
-        return view('pages/report', compact('rtype'));
+        return view('pages/reports/wdTxReport');
     }
 }

@@ -13,4 +13,4 @@
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/reports', 'ReportsController@index');
-Route::get('/reports/{rtype}', 'ReportsController@report');
+Route::get('/report/tx/welcomedesk', 'ReportsController@wdTxReport');
