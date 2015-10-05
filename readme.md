@@ -5,7 +5,7 @@ A suite of tools that we use internally to manage Envisionware and run custom re
 Be sure to run a `composer update` before using this:
 ```
 composer update
-npm install gulp
+npm install gulp-install
 npm install laravel-elixir
 nom install bootstrap-sass
 gulp
