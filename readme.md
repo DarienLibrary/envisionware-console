@@ -7,5 +7,6 @@ Be sure to run a `composer update` before using this:
 composer update
 npm install gulp
 npm install laravel-elixir
+nom install bootstrap-sass
 gulp
 ```
