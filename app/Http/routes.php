@@ -11,6 +11,15 @@
 |
 */
 
+// Front Page
 Route::get('/', 'WelcomeController@index');
-Route::get('/reports', 'ReportsController@index');
+
+// Report Forms
 Route::get('/report/tx/welcomedesk', 'ReportsController@wdTxReport');
+Route::get('/report/tx/helpdesk', 'ReportsController@hdTxReport');
+Route::get('/report/tx/cafe', 'ReportsController@cafeTxReport');
+
+// Form Results
+Route::post('/reportdisplay/tx/welcomedesk', 'ReportsController@wdTxReportDisp');
+Route::post('/reportdisplay/tx/helpdesk', 'ReportsController@hdTxReportDisp');
+Route::post('/reportdisplay/tx/cafe', 'ReportsController@cafeTxReportDisp');

@@ -10,6 +10,7 @@
     <!-- Bootstrap & custom style -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/envisionware.css') }}">
+    @yield('customcss')
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,9 +43,9 @@
                        aria-expanded="false">Reports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Service Desks</li>
-                        <li><a href="/reports.php?svcpt=wd">Welcome Desk</a></li>
-                        <li><a href="/reports.php?svcpt=hd">Help Desk</a></li>
-                        <li><a href="/reports.php?svcpt=cafe">Cafe</a></li>
+                        <li><a href="/report/tx/welcomedesk">Welcome Desk</a></li>
+                        <li><a href="/report/tx/helpdesk">Help Desk</a></li>
+                        <li><a href="/report/tx/cafe">Cafe</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Payment Stations</li>
                         <li><a href="/reports.php?svcpt=kls-kiosk">KLS Station</a></li>
@@ -70,6 +71,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
+@yield('customscripts')
 
 </body>
 </html>

@@ -10,6 +10,6 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        return "Envisionware Reporting Interface. L5 Version, yo.";
+        return view('welcome');
     }
 }
