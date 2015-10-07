@@ -22,6 +22,7 @@ Route::get('/report/tx/cafe', 'ReportsController@cafeMdseTxReport');
 Route::get('/report/tx/kioskKLS', 'ReportsController@kioskKLSTxReport');
 Route::get('/report/tx/kioskBC', 'ReportsController@kioskBCTxReport');
 Route::get('/report/tx/kioskPL', 'ReportsController@kioskPLTxReport');
+Route::get('/report/tx/kioskWeb', 'ReportsController@kioskWebTxReport');
 
 Route::get('/report/tx/ldsKLS', 'ReportsController@ldsKLSTxReport');
 Route::get('/report/tx/ldsBC', 'ReportsController@ldsBCTxReport');
@@ -34,6 +35,7 @@ Route::post('/reportdisplay/tx/cafe', 'ReportsController@cafeMdseTxReportDisp');
 Route::post('/reportdisplay/tx/kioskKLS', 'ReportsController@kioskKLSTxReportDisp');
 Route::post('/reportdisplay/tx/kioskBC', 'ReportsController@kioskBCTxReportDisp');
 Route::post('/reportdisplay/tx/KioskPL', 'ReportsController@kioskPLTxReportDisp');
+Route::post('/reportdisplay/tx/KioskWeb', 'ReportsController@kioskWebTxReportDisp');
 
 Route::post('/reportdisplay/tx/ldsKLS', 'ReportsController@ldsKLSTxReportDisp');
 Route::post('/reportdisplay/tx/ldsBC', 'ReportsController@ldsBCTxReportDisp');

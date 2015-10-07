@@ -11,6 +11,12 @@ use DB;
 class ReportsController extends Controller
 {
 
+    /**
+     * @param $posStationDB
+     * @param $startDate
+     * @param $endDate
+     * @return array
+     */
     private function posMdseTransactionSummary($posStationDB, $startDate, $endDate)
     {
         Config::set('database.default', 'sqlsrv');
@@ -51,22 +57,64 @@ class ReportsController extends Controller
         return compact('reportData', 'reportTotals');
     }
 
+    /**
+     * @param $kioskStationID
+     * @param $startDate
+     * @param $endDate
+     * @return array
+     */
     private function kioskTransactionSummary($kioskStationID, $startDate, $endDate)
     {
         Config::set('database.default', 'mysql');
 
-        $kioskSQL = "SELECT ecstransaction.id AS tid, terminalId,
+        $reportData = [];
+        $reportTotals = ['cash' => 0, 'aam' => 0, 'credit' => 0, 'total' => 0];
+
+        $kioskTransactionSQL = "SELECT ecstransaction.id AS tid, terminalId,
 		    FROM_UNIXTIME(timestamp) AS txtime, ecsdebit.debitType AS dtype, ecscredit.creditType AS ctype,
 		    ecsdebit.amount AS damount, ecscredit.amount AS camount
 		    FROM dbauthentication.ecstransaction
 		    LEFT OUTER JOIN (ecsdebit, ecscredit) ON (ecstransaction.id=ecsdebit.transaction_id
 		    AND ecstransaction.id=ecscredit.transaction_id)
-		    WHERE FROM_UNIXTIME(timestamp) >= ?
+		    WHERE ecsdebit.debitType IS NOT NULL
+		    AND FROM_UNIXTIME(timestamp) >= ?
 		    AND FROM_UNIXTIME(timestamp) <= ?
 		    AND terminalId = ?
 		    ORDER BY txtime ASC;";
 
-        return DB::select($kioskSQL, [$startDate, $endDate, $kioskStationID]);
+        $kioskTransactionResult = DB::select($kioskTransactionSQL, [$startDate, $endDate, $kioskStationID]);
+
+        foreach ($kioskTransactionResult as $kioskTransaction) {
+            if (!isset($reportData[$kioskTransaction->tid])) {
+                $reportData[$kioskTransaction->tid] = array(
+                    'desc'   => $kioskTransaction->ctype,
+                    'time'   => $kioskTransaction->txtime,
+                    'cash'   => 0,
+                    'aam'    => 0,
+                    'credit' => 0,
+                    'total'  => 0,
+                );
+            }
+
+            switch ($kioskTransaction->dtype) {
+                case 'Cash - CoinOp':
+                    $reportData[$kioskTransaction->tid]['cash'] += $kioskTransaction->camount;
+                    $reportTotals['cash'] += $kioskTransaction->camount;
+                    break;
+                case 'AAM Deposit':
+                    $reportData[$kioskTransaction->tid]['aam'] += $kioskTransaction->camount;
+                    $reportTotals['aam'] += $kioskTransaction->camount;
+                    break;
+                case 'Credit Card':
+                    $reportData[$kioskTransaction->tid]['credit'] += $kioskTransaction->camount;
+                    $reportTotals['credit'] += $kioskTransaction->camount;
+                    break;
+            }
+            $reportData[$kioskTransaction->tid]['total'] += $kioskTransaction->camount;
+            $reportTotals['total'] += $kioskTransaction->camount;
+        }
+
+        return compact('reportData', 'reportTotals');
     }
 
     public function wdMdseTxReport()
@@ -112,7 +160,15 @@ class ReportsController extends Controller
     public function kioskPLTxReport()
     {
         $formName = 'KioskPL';
-        $formDesc = 'Cafe transaction summary report';
+        $formDesc = 'Power Library transaction summary report';
+
+        return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
+    }
+
+    public function kioskWebTxReport()
+    {
+        $formName = 'KioskWeb';
+        $formDesc = 'Web transaction summary report';
 
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
     }
@@ -160,22 +216,33 @@ class ReportsController extends Controller
     public function kioskKLSTxReportDisp()
     {
         $input = Request::all();
+        $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_KLS'), $input['startDate'], $input['endDate']);
 
-        return $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_KLS'), $input['startDate'], $input['endDate']);
+        return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
     }
 
     public function kioskBCTxReportDisp()
     {
         $input = Request::all();
+        $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_BC'), $input['startDate'], $input['endDate']);
 
-        return $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_BC'), $input['startDate'], $input['endDate']);
+        return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
     }
 
     public function kioskPLTxReportDisp()
     {
         $input = Request::all();
+        $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
 
-        return $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
+        return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
+    }
+
+    public function kioskWebTxReportDisp()
+    {
+        $input = Request::all();
+        $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_WEB'), $input['startDate'], $input['endDate']);
+
+        return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
     }
 
     public function ldsKLSTxReportDisp()

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/envisionware.css') }}">
     @yield('customcss')
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -42,10 +42,6 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Reports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-header">Consolidated Reports</li>
-                        <li><a href="#">Point of Sale Credit Card Transactions</a></li>
-                        <li><a href="#">Payment Type Transaction Summary</a></li>
-                        <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Service Desks</li>
                         <li><a href="/report/tx/welcomedesk">Welcome Desk: Merchandise Transactions</a></li>
                         <li><a href="/report/tx/helpdesk">Help Desk: Merchandise Transactions</a></li>
@@ -55,6 +51,7 @@
                         <li><a href="/report/tx/kioskKLS">KLS Station: Individual Transactions</a></li>
                         <li><a href="/report/tx/kioskBC">Business Center Station: Individual Transactions</a></li>
                         <li><a href="/report/tx/kioskPL">Power Library Station: Individual Transactions</a></li>
+                        <li><a href="/report/tx/kioskWeb">Web Payment: Individual Transactions</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Library Document Stations</li>
                         <li><a href="/report/tx/ldsKLS">KLS Station: Not Yet Implemented</a></li>
