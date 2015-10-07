@@ -34,8 +34,8 @@ Route::post('/reportdisplay/tx/cafe', 'ReportsController@cafeMdseTxReportDisp');
 
 Route::post('/reportdisplay/tx/kioskKLS', 'ReportsController@kioskKLSTxReportDisp');
 Route::post('/reportdisplay/tx/kioskBC', 'ReportsController@kioskBCTxReportDisp');
-Route::post('/reportdisplay/tx/KioskPL', 'ReportsController@kioskPLTxReportDisp');
-Route::post('/reportdisplay/tx/KioskWeb', 'ReportsController@kioskWebTxReportDisp');
+Route::post('/reportdisplay/tx/kioskPL', 'ReportsController@kioskPLTxReportDisp');
+Route::post('/reportdisplay/tx/kioskWeb', 'ReportsController@kioskWebTxReportDisp');
 
 Route::post('/reportdisplay/tx/ldsKLS', 'ReportsController@ldsKLSTxReportDisp');
 Route::post('/reportdisplay/tx/ldsBC', 'ReportsController@ldsBCTxReportDisp');

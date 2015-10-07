@@ -159,7 +159,7 @@ class ReportsController extends Controller
 
     public function kioskPLTxReport()
     {
-        $formName = 'KioskPL';
+        $formName = 'kioskPL';
         $formDesc = 'Power Library transaction summary report';
 
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
@@ -167,7 +167,7 @@ class ReportsController extends Controller
 
     public function kioskWebTxReport()
     {
-        $formName = 'KioskWeb';
+        $formName = 'kioskWeb';
         $formDesc = 'Web transaction summary report';
 
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));

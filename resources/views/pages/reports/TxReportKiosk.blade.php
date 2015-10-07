@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="bs-callout bs-callout-primary">
-        <h4>{{ 'stuff goes here' }}</h4>
+        <h4>{{ $input['formDesc'] }}</h4>
         <br/>
         From: {{ $input['startDate'] }} to {{ $input['endDate'] }}
     </div>
