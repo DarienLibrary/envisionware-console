@@ -42,15 +42,23 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Reports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li class="dropdown-header">Consolidated Reports</li>
+                        <li><a href="#">Point of Sale Credit Card Transactions</a></li>
+                        <li><a href="#">Payment Type Transaction Summary</a></li>
+                        <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Service Desks</li>
-                        <li><a href="/report/tx/welcomedesk">Welcome Desk</a></li>
-                        <li><a href="/report/tx/helpdesk">Help Desk</a></li>
-                        <li><a href="/report/tx/cafe">Cafe</a></li>
+                        <li><a href="/report/tx/welcomedesk">Welcome Desk: Merchandise Transactions</a></li>
+                        <li><a href="/report/tx/helpdesk">Help Desk: Merchandise Transactions</a></li>
+                        <li><a href="/report/tx/cafe">Cafe: Merchandise Transactions</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Payment Stations</li>
-                        <li><a href="/reports.php?svcpt=kls-kiosk">KLS Station</a></li>
-                        <li><a href="/reports.php?svcpt=bc-kiosk">Business Center Station</a></li>
-                        <li><a href="/reports.php?svcpt=pl-kiosk">Power Library Station</a></li>
+                        <li><a href="/report/tx/kioskKLS">KLS Station: Individual Transactions</a></li>
+                        <li><a href="/report/tx/kioskBC">Business Center Station: Individual Transactions</a></li>
+                        <li><a href="/report/tx/kioskPL">Power Library Station: Individual Transactions</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Library Document Stations</li>
+                        <li><a href="/report/tx/ldsKLS">KLS Station: Not Yet Implemented</a></li>
+                        <li><a href="/report/tx/ldsBC">Business Center Station: Not Yet Implemented</a></li>
                     </ul>
                 </li>
             </ul>

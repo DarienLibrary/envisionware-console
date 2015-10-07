@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('customcss')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}"/>
 @stop
 
 @section('content')
@@ -16,12 +16,13 @@
             <div class="form-group">
                 {!! Form::label('Start Date: ') !!}
                 {!! Form::text('startDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'id' => 'datepicker']) !!}
-                <br />
+                <br/>
                 {!! Form::label('End Date: ') !!}
                 {!! Form::text('endDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD']) !!}
-                <br />
+                <br/>
                 {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
             </div>
+            {!! Form::hidden('formDesc', $formDesc) !!}
             {!! Form::close() !!}
 
         </div>
@@ -35,15 +36,15 @@
     <script type="text/javascript" src="{{ asset('js/daterangepicker.js') }}"></script>
 
     <script type="text/javascript">
-        $(function() {
-            $('input[name="startdate"]').daterangepicker({
+        $(function () {
+            $('input[name="startDate"]').daterangepicker({
                 locale: {
                     format: 'YYYY-MM-DD'
                 },
                 singleDatePicker: true,
                 showDropdowns: false
             }),
-            $('input[name="enddate"]').daterangepicker({
+            $('input[name="endDate"]').daterangepicker({
                 locale: {
                     format: 'YYYY-MM-DD'
                 },

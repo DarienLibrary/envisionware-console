@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('customcss')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}"/>
 @stop
 
 @section('content')
@@ -15,13 +15,14 @@
             {!! Form::open(array('url' => 'reportdisplay/tx/' . $formName)) !!}
             <div class="form-group">
                 {!! Form::label('Start Date and Time: ') !!}
-                {!! Form::text('startDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'id' => 'datepicker']) !!}
-                <br />
+                {!! Form::text('startDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD HH:MM:SS', 'id' => 'datepicker']) !!}
+                <br/>
                 {!! Form::label('End Date and Time: ') !!}
-                {!! Form::text('endDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD']) !!}
-                <br />
+                {!! Form::text('endDate', null, ['class' => 'form-control', 'placeholder' => 'YYYY-MM-DD HH:MM:SS']) !!}
+                <br/>
                 {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
             </div>
+            {!! Form::hidden('formDesc', $formDesc) !!}
             {!! Form::close() !!}
 
         </div>
@@ -35,8 +36,8 @@
     <script type="text/javascript" src="{{ asset('js/daterangepicker.js') }}"></script>
 
     <script type="text/javascript">
-        $(function() {
-            $('input[name="startdate"]').daterangepicker({
+        $(function () {
+            $('input[name="startDate"]').daterangepicker({
                 locale: {
                     format: 'YYYY-MM-DD HH:MM:SS'
                 },
@@ -44,7 +45,7 @@
                 timePicker: true,
                 showDropdowns: false
             }),
-                    $('input[name="enddate"]').daterangepicker({
+                    $('input[name="endDate"]').daterangepicker({
                         locale: {
                             format: 'YYYY-MM-DD HH:MM:SS'
                         },
