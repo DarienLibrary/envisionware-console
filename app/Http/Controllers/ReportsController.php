@@ -17,7 +17,7 @@ class ReportsController extends Controller
      * @param $endDate
      * @return array
      */
-    private function posMdseTransactionSummary($posStationDB, $startDate, $endDate)
+    private function posMdseTransactionSummary($posStationDB, $startDate, $endDate, $registerNumber = null)
     {
         Config::set('database.default', 'sqlsrv');
         Config::set('database.connections.sqlsrv.database', env($posStationDB));
@@ -26,11 +26,15 @@ class ReportsController extends Controller
         $reportData = [];
         $reportTotals = $tendered;
 
-        $lineItemQuery = "SELECT master.ControlNo, LineTotal, Description, master.TransactionDateTime, master.Total
+        $lineItemQuery = "SELECT master.ControlNo, LineTotal, Description, master.TransactionDateTime, master.Total, master.RegisterKey
   	        FROM [$posStationDB].[dbo].[TransactionDetail] AS detail
   	        LEFT OUTER JOIN [$posStationDB].[dbo].[TransactionMaster] AS master
   	        ON detail.ControlNo=master.ControlNo
   	        WHERE [TransactionDateTime] BETWEEN ? AND ?";
+
+        if (is_numeric($registerNumber)) {
+            $lineItemQuery .= " AND [RegisterKey] = " . $registerNumber;
+        }
 
         $lineItemResult = DB::select($lineItemQuery, [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
 
@@ -53,7 +57,7 @@ class ReportsController extends Controller
                 }
             }
         }
-
+        
         return compact('reportData', 'reportTotals');
     }
 
@@ -117,10 +121,10 @@ class ReportsController extends Controller
         return compact('reportData', 'reportTotals');
     }
 
-    public function wdMdseTxReport()
+    public function wdMdseTxReport($registerNumber)
     {
-        $formName = 'welcomedesk';
-        $formDesc = 'Welcome Desk merchandise transaction summary report';
+        $formName = 'welcomedesk/' . $registerNumber;
+        $formDesc = 'Welcome Desk Drawer ' . $registerNumber . ' merchandise transaction summary report';
 
         return view('pages/reports/TxReportFormDate', compact('formName', 'formDesc'));
     }
@@ -189,10 +193,10 @@ class ReportsController extends Controller
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
     }
 
-    public function wdMdseTxReportDisp()
+    public function wdMdseTxReportDisp($registerNumber)
     {
         $input = Request::all();
-        $reportDataSet = $this->posMdseTransactionSummary(env('MS_DB_DATABASE_WELCOMEDESK'), $input['startDate'], $input['endDate']);
+        $reportDataSet = $this->posMdseTransactionSummary(env('MS_DB_DATABASE_WELCOMEDESK'), $input['startDate'], $input['endDate'], $registerNumber);
 
         return view('pages/reports/TxReportMerchandise', compact('input', 'reportDataSet'));
     }

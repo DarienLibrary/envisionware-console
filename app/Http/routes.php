@@ -15,7 +15,7 @@
 Route::get('/', 'WelcomeController@index');
 
 // Report Forms
-Route::get('/report/tx/welcomedesk', 'ReportsController@wdMdseTxReport');
+Route::get('/report/tx/welcomedesk/{registerNumber}', 'ReportsController@wdMdseTxReport');
 Route::get('/report/tx/helpdesk', 'ReportsController@hdMdseTxReport');
 Route::get('/report/tx/cafe', 'ReportsController@cafeMdseTxReport');
 
@@ -28,7 +28,7 @@ Route::get('/report/tx/ldsKLS', 'ReportsController@ldsKLSTxReport');
 Route::get('/report/tx/ldsBC', 'ReportsController@ldsBCTxReport');
 
 // Form Results
-Route::post('/reportdisplay/tx/welcomedesk', 'ReportsController@wdMdseTxReportDisp');
+Route::post('/reportdisplay/tx/welcomedesk/{registerNumber}', 'ReportsController@wdMdseTxReportDisp');
 Route::post('/reportdisplay/tx/helpdesk', 'ReportsController@hdMdseTxReportDisp');
 Route::post('/reportdisplay/tx/cafe', 'ReportsController@cafeMdseTxReportDisp');
 

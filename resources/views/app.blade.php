@@ -43,7 +43,8 @@
                        aria-expanded="false">Reports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Service Desks</li>
-                        <li><a href="/report/tx/welcomedesk">Welcome Desk: Merchandise Transactions</a></li>
+                        <li><a href="/report/tx/welcomedesk/1">Welcome Desk Drawer 1: Merchandise Transactions</a></li>
+                        <li><a href="/report/tx/welcomedesk/2">Welcome Desk Drawer 2: Merchandise Transactions</a></li>
                         <li><a href="/report/tx/helpdesk">Help Desk: Merchandise Transactions</a></li>
                         <li><a href="/report/tx/cafe">Cafe: Merchandise Transactions</a></li>
                         <li role="separator" class="divider"></li>
