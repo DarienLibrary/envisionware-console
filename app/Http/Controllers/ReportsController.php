@@ -121,6 +121,11 @@ class ReportsController extends Controller
         return compact('reportData', 'reportTotals');
     }
 
+    private function kioskTransactionGroupSummary()
+    {
+
+    }
+
     public function wdMdseTxReport($registerNumber)
     {
         $formName = 'welcomedesk/' . $registerNumber;
@@ -165,6 +170,14 @@ class ReportsController extends Controller
     {
         $formName = 'kioskPL';
         $formDesc = 'Power Library transaction summary report';
+
+        return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
+    }
+
+    public function kioskPLTxReportGrouped()
+    {
+        $formName = 'kioskPLGrouped';
+        $formDesc = 'Power Library grouped transaction summary report';
 
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
     }
@@ -239,6 +252,14 @@ class ReportsController extends Controller
         $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
 
         return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
+    }
+
+    public function kioskPLTxReportGroupedDisp()
+    {
+        $input = Request::all();
+        $reportDataSet = $this->kioskTransactionGroupSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
+
+        return view('pages/reports/TxReportKioskGrouped', compact('input', 'reportDataSet'));
     }
 
     public function kioskWebTxReportDisp()
