@@ -57,7 +57,7 @@ class ReportsController extends Controller
                 }
             }
         }
-        
+
         return compact('reportData', 'reportTotals');
     }
 
