@@ -62,6 +62,47 @@ class ReportsController extends Controller
     }
 
     /**
+     * @param $posStationDB
+     * @param $startDate
+     * @param $endDate
+     * @return string
+     */
+    private function posMdseTransactionSummaryGrouped($posStationDB, $startDate, $endDate)
+    {
+        Config::set('database.default', 'sqlsrv');
+        Config::set('database.connections.sqlsrv.database', env($posStationDB));
+
+        $lineItemQuery = "SELECT master.ControlNo, master.TransactionDateTime, master.Total, payments.CC, payments.CA, payments.CX, payments.AM, payments.CH, master.RegisterKey, detail.Description, detail.LineTotal
+            FROM (
+                SELECT
+                ControlNo,
+                PaymentCode,
+                Amount
+                FROM [$posStationDB].[dbo].[TransactionPayments]
+            ) AS t
+            PIVOT (
+                SUM(Amount)
+                FOR PaymentCode IN([CC],[CA],[CX],[AM],[CH])
+            ) AS payments
+            LEFT OUTER JOIN [$posStationDB].[dbo].[TransactionDetail] AS detail ON detail.ControlNo=payments.ControlNo
+            LEFT OUTER JOIN [$posStationDB].[dbo].[TransactionMaster] AS master ON detail.ControlNo=master.ControlNo
+            WHERE TransactionDateTime BETWEEN ? AND ?";
+
+        $lineItemResult = DB::select($lineItemQuery, [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+
+        $results = array();
+
+        foreach ($lineItemResult as $lineItem) {
+            if ($lineItem->Description != 'AAM Transaction' && $lineItem->Description != 'ILS Fines & Fees') {
+                $lineItem->Description = 'BC Revenue';
+            }
+            $results[] = $lineItem;
+        }
+
+        return $results;
+    }
+
+    /**
      * @param $kioskStationID
      * @param $startDate
      * @param $endDate
@@ -142,6 +183,14 @@ class ReportsController extends Controller
         return view('pages/reports/TxReportFormDate', compact('formName', 'formDesc'));
     }
 
+    public function hdMdseTxGroupedReport()
+    {
+        $formName = 'helpdeskGrouped';
+        $formDesc = 'Help Desk grouped transaction summary report';
+
+        return view('pages/reports/TxReportFormDate', compact('formName', 'formDesc'));
+    }
+
     public function cafeMdseTxReport()
     {
         $formName = 'cafe';
@@ -170,14 +219,6 @@ class ReportsController extends Controller
     {
         $formName = 'kioskPL';
         $formDesc = 'Power Library transaction summary report';
-
-        return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
-    }
-
-    public function kioskPLTxReportGrouped()
-    {
-        $formName = 'kioskPLGrouped';
-        $formDesc = 'Power Library grouped transaction summary report';
 
         return view('pages/reports/TxReportFormDateTime', compact('formName', 'formDesc'));
     }
@@ -222,6 +263,14 @@ class ReportsController extends Controller
         return view('pages/reports/TxReportMerchandise', compact('input', 'reportDataSet'));
     }
 
+    public function hdMdseTxReportGroupedDisp()
+    {
+        $input = Request::all();
+        $reportDataSet = $this->posMdseTransactionSummaryGrouped(env('MS_DB_DATABASE_HELPDESK'), $input['startDate'], $input['endDate']);
+
+        return view('pages/reports/hdMdseTxReportGroupedDisp', compact('input', 'reportDataSet'));
+    }
+
     public function cafeMdseTxReportDisp()
     {
         $input = Request::all();
@@ -252,14 +301,6 @@ class ReportsController extends Controller
         $reportDataSet = $this->kioskTransactionSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
 
         return view('pages/reports/TxReportKiosk', compact('input', 'reportDataSet'));
-    }
-
-    public function kioskPLTxReportGroupedDisp()
-    {
-        $input = Request::all();
-        $reportDataSet = $this->kioskTransactionGroupSummary(env('KIOSK_HOSTNAME_PL'), $input['startDate'], $input['endDate']);
-
-        return view('pages/reports/TxReportKioskGrouped', compact('input', 'reportDataSet'));
     }
 
     public function kioskWebTxReportDisp()

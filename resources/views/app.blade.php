@@ -46,6 +46,7 @@
                         <li><a href="/report/tx/welcomedesk/1">Welcome Desk Drawer 1: Merchandise Transactions</a></li>
                         <li><a href="/report/tx/welcomedesk/2">Welcome Desk Drawer 2: Merchandise Transactions</a></li>
                         <li><a href="/report/tx/helpdesk">Help Desk: Merchandise Transactions</a></li>
+                        <li><a href="/report/tx/helpdeskGrouped">Help Desk: Merchandise Transactions (Grouped)</a></li>
                         <li><a href="/report/tx/cafe">Cafe: Merchandise Transactions</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Payment Stations</li>
